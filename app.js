@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('./config/passport')
+const methodOverride = require('method-override')
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
@@ -25,6 +26,8 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use(flash())
+
+app.use(methodOverride('_method'))
 
 app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)

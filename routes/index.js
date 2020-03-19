@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const helpers = require('../_helpers');
+const helpers = require('../_helpers')
 
+const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
 
 const passport = require('../config/passport')
@@ -14,9 +15,20 @@ const authenticated = (req, res, next) => {
   res.redirect('/signin')
 }
 
+const authenticatedAdmin = (req, res, next) => {
+  if (helpers.ensureAuthenticated(req)) {
+    if (helpers.getUser(req).role === 'admin') { return next() }
+    return res.redirect('/')
+  }
+  res.redirect('/signin')
+}
+
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-router.get('/', authenticated, (req, res) => res.render('tweets'))
+router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+
+router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
+router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
