@@ -29,6 +29,7 @@ router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
