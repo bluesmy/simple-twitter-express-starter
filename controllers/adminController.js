@@ -1,7 +1,12 @@
+const helpers = require('../_helpers');
+
 const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
+const Like = db.Like
+
+const Sequelize = require('sequelize')
 
 const adminController = {
 
@@ -49,6 +54,58 @@ const adminController = {
           })
       })
   },
+
+  getUsers: (req, res) => {
+    // 看見站內所有的使用者
+    User.findAll({
+      include: [
+        { model: Tweet, include: [Like] },
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+      ],
+      attributes: [
+        'id', 'email', 'name', 'role',
+        // 推播數量
+        [Sequelize.literal('(SELECT COUNT(*) FROM Tweets WHERE Tweets.UserId = User.id)'), 'TweetsCount'],
+        // 推播被 like 的數量
+        [Sequelize.literal('(SELECT COUNT(*) FROM Likes WHERE TweetId in (SELECT id FROM Tweets where UserId = User.id))'), 'LikesCount']
+      ],
+      // 清單預設按推播文數排序
+      order: [[Sequelize.literal("TweetsCount DESC")]],
+    })
+      .then(users => {
+        // 關注人數、跟隨者人數
+        users = users.map(user => ({
+          ...user.dataValues,
+          // TweetsCount: user.dataValues.TweetsCount,
+          // LikesCount: user.dataValues.LikesCount,
+          FollowingsCount: user.Followings.length,
+          FollowersCount: user.Followers.length
+        }))
+        return res.render('admin/users', { users })
+      })
+  },
+
+  putUser: (req, res) => {
+    // 修改使用者為admin/user
+    User.findByPk(req.params.id)
+      .then(user => {
+        if (user.role === 'admin') {
+          user.update({
+            role: 'user'
+          })
+        }
+        else {
+          user.update({
+            role: 'admin'
+          })
+        }
+      })
+      .then(user => {
+        req.flash('success_messages', '使用者身分已成功更新')
+        res.redirect('/admin/users')
+      })
+  }
 }
 
 module.exports = adminController

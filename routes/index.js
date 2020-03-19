@@ -30,6 +30,8 @@ router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
+router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+router.put('/admin/users/:id', authenticatedAdmin, adminController.putUser)
 
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
