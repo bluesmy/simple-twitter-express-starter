@@ -24,7 +24,7 @@
           <img class="rounded ml-2" style="width: 90px;" src="{{this.User.avatar}}" alt="avatar">
         </div>
         <div class="col-md-8">
-          <h6><a href="">{{this.User.name}},{{ moment this.createdAt}}</a></h6>
+          <h6><a href="/users/{{this.User.id}}/tweets">{{this.User.name}},{{ moment this.createdAt}}</a></h6>
           <p>{{this.description}}</p>
           <a href="" class="mr-1">Reply</a>
           <a href="" class="text-danger">like</a>

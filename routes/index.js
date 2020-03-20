@@ -19,6 +19,7 @@ const authenticated = (req, res, next) => {
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 router.get("/", authenticated, (req, res) => res.redirect("/tweets"));
 router.get("/tweets", authenticated, tweetController.getTweets);
+router.post("/tweets", authenticated, tweetController.postTweets);
 
 router.get("/signup", userController.signUpPage);
 router.post("/signup", userController.signUp);

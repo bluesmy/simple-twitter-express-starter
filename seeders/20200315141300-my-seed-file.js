@@ -35,23 +35,65 @@ module.exports = {
           role: "0",
           createdAt: new Date(),
           updatedAt: new Date()
+        },
+        {
+          email: "user3@example.com",
+          password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(10), null),
+          name: "user3",
+          avatar: faker.image.avatar(),
+          introduction: faker.lorem.text(),
+          role: "0",
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          email: "user4@example.com",
+          password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(10), null),
+          name: "user4",
+          avatar: faker.image.avatar(),
+          introduction: faker.lorem.text(),
+          role: "0",
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          email: "user5@example.com",
+          password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(10), null),
+          name: "user5",
+          avatar: faker.image.avatar(),
+          introduction: faker.lorem.text(),
+          role: "0",
+          createdAt: new Date(),
+          updatedAt: new Date()
         }
       ],
       {}
     );
-    return queryInterface.bulkInsert(
+    queryInterface.bulkInsert(
       "Tweets",
       Array.from({ length: 10 }).map(d => ({
-        UserId: Math.floor(Math.random() * 3 + 1),
+        UserId: Math.floor(Math.random() * 6 + 1),
         description: faker.lorem.text(),
         createdAt: new Date(),
         updatedAt: new Date()
-      }))
+      })),
+      {}
+    );
+    return queryInterface.bulkInsert(
+      "Followships",
+      Array.from({ length: 10 }).map(d => ({
+        followerId: Math.floor(Math.random() * 6 + 1),
+        followingId: Math.floor(Math.random() * 6 + 1),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      })),
+      {}
     );
   },
 
   down: (queryInterface, Sequelize) => {
     queryInterface.bulkDelete("Users", null, {});
-    return queryInterface.bulkDelete("Tweets", null, {});
+    queryInterface.bulkDelete("Tweets", null, {});
+    return queryInterface.bulkDelete("Followships", null, {});
   }
 };
