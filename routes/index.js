@@ -34,4 +34,6 @@ router.post(
 );
 router.get("/logout", userController.logout);
 
+router.get("/users/:id/tweets", authenticated, userController.getUser);
+
 module.exports = router;

@@ -23,7 +23,8 @@
         <a href="/admin" style="color: black;margin-right: 10px;">Admin 後台</a>
         {{/if}}
         {{#if user}}
-        <a href="/users/{{user.id}}" style="color: black;margin-right: 10px;">Profile</a>
+        <a href="/users/{{user.id}}/tweets" style="color: black;margin-right: 10px;"><img class="rounded"
+            style="width:40px;" src="{{user.avatar}}" alt="user"></a>
         <a href="/logout"><button class="btn btn-outline-primary my-2 my-sm-0">LogOut</button></a>
         {{/if}}
       </div>

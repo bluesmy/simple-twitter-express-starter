@@ -1,1 +1,51 @@
-<div>tweets</div>
+<div class="row">
+  <div class="col-md-8">
+    <form>
+      <div class="form-group">
+        <textarea class="form-control mb-3" name="description" id="description" cols="20" rows="5"></textarea>
+        <button type="submit" class="btn btn-info float-right">tweet</button>
+      </div>
+    </form>
+    <br />
+    <br />
+    {{#each tweets}}
+    <div class="card mb-3">
+      <div class="row m-1">
+        <div class="col-md-4 text-center m-auto">
+          <a href="/users/{{this.User.id}}/tweets"><img class="rounded ml-2" src="{{this.User.avatar}}"
+              alt="avatar"></a>
+        </div>
+        <div class="col-md-8">
+          <h6><a href="">{{this.User.name}},{{ moment this.createdAt}}</a></h6>
+          <p>{{this.description}}</p>
+          <a href="" class="mr-1">Reply</a>
+          <a href="" class="text-danger">like</a>
+        </div>
+      </div>
+
+    </div>
+    {{/each}}
+
+  </div>
+
+  <div class="col-md-4">
+    <h2>Popular</h2>
+    {{#each tweets}}
+    <div class="card mb-3">
+      <div class="row m-1">
+        <div class="col-md-4 text-center">
+          <img class="rounded ml-2" style="width: 90px;" src="{{this.User.avatar}}" alt="avatar">
+        </div>
+        <div class="col-md-8">
+          <h5><a href="">{{this.User.name}}</a></h5>
+          <p>{{this.description}}</p>
+          <a href="">Reply</a>
+          <a href="">like</a>
+        </div>
+      </div>
+
+    </div>
+    {{/each}}
+
+  </div>
+</div>
