@@ -28,7 +28,7 @@
 
   </div>
 
-  <div class="col-md-4">
+  {{!-- <div class="col-md-4">
     <h2>Popular</h2>
     {{#each tweets}}
     <div class="card mb-3">
@@ -41,6 +41,26 @@
           <p>{{this.description}}</p>
           <a href="">Reply</a>
           <a href="">like</a>
+        </div>
+      </div>
+
+    </div>
+    {{/each}}
+
+  </div> --}}
+
+  <div class="col-md-4">
+    <h2>Popular</h2>
+    {{#each users}}
+    <div class="card mb-3">
+      <div class="row m-1">
+        <div class="col-md-4 text-center">
+          <img class="rounded ml-2" style="width: 90px;" src="{{this.avatar}}" alt="avatar">
+        </div>
+        <div class="col-md-8">
+          <h5><a href="/users/{{this.id}}/tweets">{{this.name}}</a></h5>
+          <p>{{this.introduction}}</p>
+          <button class="btn btn-info">Follow</button>
         </div>
       </div>
 
