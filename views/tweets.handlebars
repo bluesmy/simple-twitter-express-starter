@@ -2,7 +2,7 @@
   <div class="col-md-8">
     <form action="/tweets" method="POST">
       <div class="form-group">
-        <textarea class="form-control mb-3" name="description" id="description" cols="20" rows="5"></textarea>
+        <textarea class="form-control mb-3" name="description" id="description" cols="20" rows="5">{{word}}</textarea>
         <button type="submit" class="btn btn-info float-right">tweet</button>
       </div>
     </form>
@@ -54,12 +54,13 @@
     {{#each users}}
     <div class="card mb-3">
       <div class="row m-1">
-        <div class="col-md-4 text-center">
-          <img class="rounded ml-2" style="width: 90px;" src="{{this.avatar}}" alt="avatar">
+        <div class="col-md-4">
+          <a href="/users/{{this.id}}/tweets"><img class="rounded ml-2" style="width: 50px;" src="{{this.avatar}}"
+              alt="avatar"></a>
         </div>
         <div class="col-md-8">
           <h5><a href="/users/{{this.id}}/tweets">{{this.name}}</a></h5>
-          <p>{{this.introduction}}</p>
+          <p class="mr-3">{{this.introduction}}</p>
           <button class="btn btn-info">Follow</button>
         </div>
       </div>

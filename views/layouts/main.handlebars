@@ -19,9 +19,9 @@
       <ul class="navbar-nav mr-auto">
       </ul>
       <div>
-        {{#if user.isAdmin}}
+        {{#ifCond user.role "admin"}}
         <a href="/admin" style="color: black;margin-right: 10px;">Admin 後台</a>
-        {{/if}}
+        {{/ifCond}}
         {{#if user}}
         <a href="/users/{{user.id}}/tweets" style="color: black;margin-right: 10px;"><img class="rounded"
             style="width:40px;" src="{{user.avatar}}" alt="user"></a>
