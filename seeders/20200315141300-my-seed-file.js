@@ -1,76 +1,76 @@
-"use strict";
-const bcrypt = require("bcryptjs");
-const faker = require("faker");
+'use strict'
+const bcrypt = require('bcryptjs')
+const faker = require('faker')
 module.exports = {
   up: (queryInterface, Sequelize) => {
     queryInterface.bulkInsert(
-      "Users",
+      'Users',
       [
         {
-          email: "root@example.com",
-          password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(10), null),
-          name: "root",
+          email: 'root@example.com',
+          password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+          name: 'root',
           avatar: faker.image.avatar(),
           introduction: faker.lorem.text(),
-          role: "1",
+          role: "admin",
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          email: "user1@example.com",
-          password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(10), null),
-          name: "user1",
+          email: 'user1@example.com',
+          password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+          name: 'user1',
           avatar: faker.image.avatar(),
           introduction: faker.lorem.text(),
-          role: "0",
+          role: "user",
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          email: "user2@example.com",
-          password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(10), null),
-          name: "user2",
+          email: 'user2@example.com',
+          password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+          name: 'user2',
           avatar: faker.image.avatar(),
           introduction: faker.lorem.text(),
-          role: "0",
+          role: "user",
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          email: "user3@example.com",
-          password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(10), null),
-          name: "user3",
+          email: 'user3@example.com',
+          password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+          name: 'user3',
           avatar: faker.image.avatar(),
           introduction: faker.lorem.text(),
-          role: "0",
+          role: "user",
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          email: "user4@example.com",
-          password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(10), null),
-          name: "user4",
+          email: 'user4@example.com',
+          password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+          name: 'user4',
           avatar: faker.image.avatar(),
           introduction: faker.lorem.text(),
-          role: "0",
+          role: "user",
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          email: "user5@example.com",
-          password: bcrypt.hashSync("12345678", bcrypt.genSaltSync(10), null),
-          name: "user5",
+          email: 'user5@example.com',
+          password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+          name: 'user5',
           avatar: faker.image.avatar(),
           introduction: faker.lorem.text(),
-          role: "0",
+          role: "user",
           createdAt: new Date(),
           updatedAt: new Date()
         }
       ],
       {}
-    );
+    )
     queryInterface.bulkInsert(
-      "Tweets",
+      'Tweets',
       Array.from({ length: 10 }).map(d => ({
         UserId: Math.floor(Math.random() * 6 + 1),
         description: faker.lorem.text(),
@@ -78,9 +78,9 @@ module.exports = {
         updatedAt: new Date()
       })),
       {}
-    );
+    )
     return queryInterface.bulkInsert(
-      "Followships",
+      'Followships',
       Array.from({ length: 10 }).map(d => ({
         followerId: Math.floor(Math.random() * 6 + 1),
         followingId: Math.floor(Math.random() * 6 + 1),
@@ -88,12 +88,12 @@ module.exports = {
         updatedAt: new Date()
       })),
       {}
-    );
+    )
   },
 
   down: (queryInterface, Sequelize) => {
-    queryInterface.bulkDelete("Users", null, {});
-    queryInterface.bulkDelete("Tweets", null, {});
-    return queryInterface.bulkDelete("Followships", null, {});
+    queryInterface.bulkDelete('Users', null, {})
+    queryInterface.bulkDelete('Tweets', null, {})
+    return queryInterface.bulkDelete('Followships', null, {})
   }
-};
+}
