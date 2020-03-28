@@ -1,6 +1,10 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
+const helpers = require('../_helpers')
 const User = db.User
+const Tweet = db.Tweet
+
+const Sequelize = require('sequelize')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -44,6 +48,28 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
+
+  getUser: (req, res) => {
+    User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet, include: [User] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ],
+      attributes: [
+        'id', 'email', 'name', 'avatar', 'introduction',
+        // 推播數量
+        [Sequelize.literal('(SELECT COUNT(*) FROM Tweets WHERE Tweets.UserId = User.id)'), 'TweetsCount'],
+        // 推播被 like 的數量
+        [Sequelize.literal('(SELECT COUNT(*) FROM Likes WHERE TweetId in (SELECT id FROM Tweets where UserId = User.id))'), 'LikesCount']
+      ],
+    }).then(user => {
+      const FollowingsCount = user.Followings.length
+      const FollowersCount = user.Followers.length
+      const isFollowed = req.user.Followings.map(d => d.id).includes(user.id)
+      return res.render("users/profile", { profile: user.get(), FollowingsCount, FollowersCount, isFollowed })
+    })
+  }
 }
 
 module.exports = userController

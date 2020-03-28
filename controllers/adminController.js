@@ -4,7 +4,6 @@ const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
-const Like = db.Like
 
 const Sequelize = require('sequelize')
 
@@ -59,7 +58,9 @@ const adminController = {
     // 看見站內所有的使用者
     User.findAll({
       include: [
-        { model: Tweet, include: [Like] },
+        // Tweet,
+        // Like,
+        // { model: Tweet, include: [Like] },
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' },
       ],
