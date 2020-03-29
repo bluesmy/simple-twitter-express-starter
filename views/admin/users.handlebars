@@ -1,0 +1,54 @@
+<h1>Simple Twitter後台</h1>
+
+<a href='/admin/tweets'>Tweets</a> |
+<a href='/admin/users'>Users</a>
+
+<br />
+<br />
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Email</th>
+      <th scope="col">Name</th>
+      <th scope="col">Role</th>
+      <th scope="col">#</th>
+      <th scope="col">推播數量</th>
+      <th scope="col">關注人數</th>
+      <th scope="col">跟隨者人數</th>
+      <th scope="col">推播被 like 的數量</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each users}}
+    <tr>
+      <th scope="row">{{this.email}}</th>
+      <td>{{this.name}}</td>
+      <td>{{this.role}}</td>
+      <td>
+        {{#ifCond this.role 'admin'}}
+        <form action="/admin/users/{{this.id}}?_method=PUT" method="POST">
+          <button type="submit" class="btn btn-link">set as user</button>
+        </form>
+        {{else}}
+        <form action="/admin/users/{{this.id}}?_method=PUT" method="POST">
+          <button type="submit" class="btn btn-link">set as admin</button>
+        </form>
+        {{/ifCond}}
+      </td>
+      <td>
+        {{this.TweetsCount}}
+      </td>
+      <td>
+        {{this.Followings.length}}
+      </td>
+      <td>
+        {{this.Followers.length}}
+      </td>
+      <td>
+        {{this.LikesCount}}
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
