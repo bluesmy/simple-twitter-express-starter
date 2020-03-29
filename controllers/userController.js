@@ -111,6 +111,31 @@ const userController = {
 
       return res.render('users/followings', { profile: user.get(), TweetsCount, FollowingsCount, FollowersCount, LikesCount, isFollowed, Followings })
     })
+  },
+
+  getFollowers: (req, res) => {
+    User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet, include: [User] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        Like
+      ]
+    }).then(user => {
+      console.log(user.Followings.Followship)
+      const TweetsCount = user.Tweets.length
+      const FollowingsCount = user.Followings.length
+      const FollowersCount = user.Followers.length
+      const LikesCount = user.Likes.length
+      const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+
+      const Followers = user.Followers.map(follower => ({
+        ...follower.dataValues,
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(follower.id)
+      })).sort((a, b) => b.Followship.updatedAt - a.Followship.updatedAt)  // 依照Follow順序排列
+
+      return res.render('users/followers', { profile: user.get(), TweetsCount, FollowingsCount, FollowersCount, LikesCount, isFollowed, Followers })
+    })
   }
 }
 

@@ -43,5 +43,6 @@ router.get('/logout', userController.logout)
 router.get('/users/:id/tweets', authenticated, userController.getUser)
 router.get('/users/:id/likes', authenticated, userController.getLikes)
 router.get('/users/:id/followings', authenticated, userController.getFollowings)
+router.get('/users/:id/followers', authenticated, userController.getFollowers)
 
 module.exports = router
