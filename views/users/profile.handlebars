@@ -8,20 +8,21 @@
 
 
     <ul class="list-unstyled pull-left">
-      <li><strong>Tweets: {{profile.TweetsCount }}</strong> </li>
-      <li><strong>Following: {{FollowingsCount }}</strong> </li>
-      <li><strong>Follower: {{FollowersCount }}</strong> </li>
-      <li><strong>Like: {{profile.LikesCount }}</strong></li>
+      <li><strong>Tweets: {{ TweetsCount }}</strong> </li>
+      <li><strong>Following: {{ FollowingsCount }}</strong> </li>
+      <li><strong>Follower: {{ FollowersCount }}</strong> </li>
+      <li><strong>Like: {{ LikesCount }}</strong></li>
     </ul>
     {{#ifCond profile.id user.id}}
     <a class="btn btn-primary" href="/users/{{profile.id}}/edit" role="button">Edit</a>
     {{else}}
     {{#if this.isFollowed }}
-    <form action="/following/{{profile.id}}?_method=DELETE" method="POST" style="display: contents;"><button
+    <form action="/followships/{{profile.id}}?_method=DELETE" method="POST" style="display: contents;"><button
         type="submit" class="btn btn-danger">Unfollow</button></form>
     {{else}}
-    <form action="/following/{{profile.id}}" method="POST" style="display: contents;"><button type="submit"
-        class="btn btn-info">Follow</button></form>
+    <form action="/followships" method="POST" style="display: contents;">
+      <input type="hidden" name="id" value="{{profile.id}}">
+      <button type="submit" class="btn btn-info">Follow</button></form>
     {{/if}}
     {{/ifCond}}
   </div>

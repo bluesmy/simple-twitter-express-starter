@@ -3,8 +3,7 @@ const db = require('../models')
 const helpers = require('../_helpers')
 const User = db.User
 const Tweet = db.Tweet
-
-const Sequelize = require('sequelize')
+const Like = db.Like
 
 const userController = {
   signUpPage: (req, res) => {
@@ -55,19 +54,16 @@ const userController = {
         { model: Tweet, include: [User] },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
+        Like
       ],
-      attributes: [
-        'id', 'email', 'name', 'avatar', 'introduction',
-        // 推播數量
-        [Sequelize.literal('(SELECT COUNT(*) FROM Tweets WHERE Tweets.UserId = User.id)'), 'TweetsCount'],
-        // 推播被 like 的數量
-        [Sequelize.literal('(SELECT COUNT(*) FROM Likes WHERE TweetId in (SELECT id FROM Tweets where UserId = User.id))'), 'LikesCount']
-      ],
+      order: [[{ model: Tweet }, 'createdAt', 'DESC']]
     }).then(user => {
+      const TweetsCount = user.Tweets.length
       const FollowingsCount = user.Followings.length
       const FollowersCount = user.Followers.length
-      const isFollowed = req.user.Followings.map(d => d.id).includes(user.id)
-      return res.render("users/profile", { profile: user.get(), FollowingsCount, FollowersCount, isFollowed })
+      const LikesCount = user.Likes.length
+      const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+      return res.render("users/profile", { profile: user.get(), TweetsCount, FollowingsCount, FollowersCount, LikesCount, isFollowed })
     })
   }
 }
