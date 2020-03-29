@@ -79,7 +79,6 @@ const userController = {
       // 依照Like順序排列
       order: [[{ model: Tweet, as: 'LikedTweets' }, Like, 'updatedAt', 'DESC']]
     }).then(user => {
-      console.log(user.LikedTweets)
       const TweetsCount = user.Tweets.length
       const FollowingsCount = user.Followings.length
       const FollowersCount = user.Followers.length
@@ -87,6 +86,30 @@ const userController = {
       const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
 
       return res.render('users/likes', { profile: user.get(), TweetsCount, FollowingsCount, FollowersCount, LikesCount, isFollowed })
+    })
+  },
+
+  getFollowings: (req, res) => {
+    User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet, include: [User] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        Like
+      ]
+    }).then(user => {
+      console.log(user.Followings.Followship)
+      const TweetsCount = user.Tweets.length
+      const FollowingsCount = user.Followings.length
+      const FollowersCount = user.Followers.length
+      const LikesCount = user.Likes.length
+      const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+
+      const Followings = user.Followings.map(following => ({
+        ...following.dataValues
+      })).sort((a, b) => b.Followship.updatedAt - a.Followship.updatedAt)  // 依照Following順序排列
+
+      return res.render('users/followings', { profile: user.get(), TweetsCount, FollowingsCount, FollowersCount, LikesCount, isFollowed, Followings })
     })
   }
 }
