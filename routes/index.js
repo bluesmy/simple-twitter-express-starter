@@ -4,7 +4,7 @@ const helpers = require('../_helpers')
 
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
-const tweetController = require("../controllers/tweetController.js")
+const tweetController = require('../controllers/tweetController.js')
 
 const passport = require('../config/passport')
 
@@ -12,8 +12,8 @@ const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     return next()
   }
-  req.flash("error_messages", "請先登入才能使用")
-  res.redirect("/signin")
+  req.flash('error_messages', "請先登入才能使用")
+  res.redirect('/signin')
 }
 
 const authenticatedAdmin = (req, res, next) => {
@@ -37,20 +37,20 @@ router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTwe
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 router.put('/admin/users/:id', authenticatedAdmin, adminController.putUser)
 
-router.get("/signup", userController.signUpPage)
-router.post("/signup", userController.signUp)
+router.get('/signup', userController.signUpPage)
+router.post('/signup', userController.signUp)
 
-router.get("/signin", userController.signInPage)
+router.get('/signin', userController.signInPage)
 router.post(
-  "/signin",
-  passport.authenticate("local", {
-    failureRedirect: "/signin",
+  '/signin',
+  passport.authenticate('local', {
+    failureRedirect: '/signin',
     failureFlash: true
   }),
   userController.signIn
 )
-router.get("/logout", userController.logout)
+router.get('/logout', userController.logout)
 
-router.get("/users/:id/tweets", authenticated, userController.getUser)
+router.get('/users/:id/tweets', authenticated, userController.getUser)
 
 module.exports = router
