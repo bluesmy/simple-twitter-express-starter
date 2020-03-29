@@ -4,6 +4,7 @@ const helpers = require('../_helpers')
 
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
+const followshipController = require('../controllers/followshipController.js')
 
 const passport = require('../config/passport')
 
@@ -44,5 +45,8 @@ router.get('/users/:id/tweets', authenticated, userController.getUser)
 router.get('/users/:id/likes', authenticated, userController.getLikes)
 router.get('/users/:id/followings', authenticated, userController.getFollowings)
 router.get('/users/:id/followers', authenticated, userController.getFollowers)
+
+router.post('/followships', authenticated, followshipController.addFollowing)
+router.delete('/followships/:followingId', authenticated, followshipController.removeFollowing)
 
 module.exports = router
