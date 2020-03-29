@@ -49,4 +49,8 @@ router.get('/users/:id/followers', authenticated, userController.getFollowers)
 router.post('/followships', authenticated, followshipController.addFollowing)
 router.delete('/followships/:followingId', authenticated, followshipController.removeFollowing)
 
+router.get('/chat', (req, res) => {
+  res.render('chat')
+})
+
 module.exports = router
