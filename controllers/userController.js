@@ -2,6 +2,8 @@ const bcrypt = require("bcryptjs");
 const db = require("../models");
 const User = db.User;
 const Tweet = db.Tweet;
+const Like = db.Like;
+const helpers = require("../_helpers");
 
 const userController = {
   signUpPage: (req, res) => {
@@ -48,9 +50,30 @@ const userController = {
 
   getUser: (req, res) => {
     User.findByPk(req.params.id, {
-      include: [{ model: Tweet, include: [User] }]
+      include: [{ model: Tweet, Like, Reply, include: [User] }]
     }).then(user => {
-      return res.render("users", { user: user.get() });
+      return res.render("users/profile", { profile: user.get() });
+    });
+  },
+
+  addLike: (req, res) => {
+    return Like.create({
+      UserId: helpers.getUser(req).id,
+      TweetId: req.params.id
+    }).then(tweet => {
+      return res.redirect("back");
+    });
+  },
+  removeLike: (req, res) => {
+    return Like.findOne({
+      where: {
+        UserId: helpers.getUser(req).id,
+        TweetId: req.params.id
+      }
+    }).then(like => {
+      like.destroy().then(tweet => {
+        return res.redirect("back");
+      });
     });
   }
 };

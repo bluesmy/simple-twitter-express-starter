@@ -1,26 +1,34 @@
 <div class="row">
-  <div class="col-md-8">
-    <form action="/tweets" method="POST">
-      <div class="form-group">
-        <textarea class="form-control mb-3" name="description" id="description" cols="20" rows="5"
-          maxlength="140"></textarea>
-        <button type="submit" class="btn btn-info float-right">tweet</button>
-      </div>
-    </form>
-    <br />
-    <br />
-    {{#each tweets}}
+  <div class="col-md-2 ">
+    <div class="text-center">
+      <img class="rounded" src="{{profile.avatar}}" alt="avatar">
+      <h2>{{profile.name}}</h2>
+      <p>{{profile.introduction}}</p>
+    </div>
+
+
+    <ul class="list-unstyled pull-left">
+      <li><strong>Tweets:</strong> </li>
+      <li><strong>Following:</strong> </li>
+      <li><strong>Follower:</strong> </li>
+      <li><strong>like</strong></li>
+    </ul>
+    <button class="btn btn-info">Follow</button>
+  </div>
+
+  <div class="col-md-10">
+    {{#each profile.Tweets}}
     <div class="card mb-3">
       <div class="row m-1">
         <div class="col-md-4 text-center m-auto">
-          <a href="/users/{{this.User.id}}/tweets"><img class="rounded ml-2" src="{{this.User.avatar}}"
-              alt="avatar"></a>
+          <img class="rounded ml-2" style="width: 90px;" src="{{this.User.avatar}}" alt="avatar">
         </div>
         <div class="col-md-8">
           <h6><a href="/users/{{this.User.id}}/tweets">{{this.User.name}},{{ moment this.createdAt}}</a></h6>
+          <p>{{this.description}}</p>
           <a href="/tweets/{{this.id}}/replies"><button class="btn"><i class="far fa-comment-dots"
                 style="color:blue;"></i>
-              <p style="display:inline;color: blue;">({{this.reply}})</p>
+              <p style="display:inline;color: blue;">({{this.Replies.length}})</p>
             </button></a>
           {{#if this.isLiked}}
           <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
@@ -40,27 +48,6 @@
 
     </div>
     {{/each}}
-
   </div>
 
-  <div class="col-md-4">
-    <h2>Popular</h2>
-    {{#each users}}
-    <div class="card mb-3">
-      <div class="row m-1">
-        <div class="col-md-4">
-          <a href="/users/{{this.id}}/tweets"><img class="rounded ml-2" style="width: 50px;" src="{{this.avatar}}"
-              alt="avatar"></a>
-        </div>
-        <div class="col-md-8">
-          <h5><a href="/users/{{this.id}}/tweets">{{this.name}}</a></h5>
-          <p class="mr-3">{{this.introduction}}</p>
-          <button class="btn btn-info">Follow</button>
-        </div>
-      </div>
-
-    </div>
-    {{/each}}
-
-  </div>
 </div>
