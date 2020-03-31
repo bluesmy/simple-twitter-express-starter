@@ -10,6 +10,7 @@ class Records extends EventEmitter {
   }
 
   push(msg) {
+    console.log(`push ${msg}`)
     data.push(msg)
 
     if (data.length > MAX) {

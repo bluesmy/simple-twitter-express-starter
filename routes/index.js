@@ -24,8 +24,6 @@ const authenticatedAdmin = (req, res, next) => {
   res.redirect('/signin')
 }
 
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
@@ -49,8 +47,7 @@ router.get('/users/:id/followers', authenticated, userController.getFollowers)
 router.post('/followships', authenticated, followshipController.addFollowing)
 router.delete('/followships/:followingId', authenticated, followshipController.removeFollowing)
 
-router.get('/chat', (req, res) => {
-  // res.sendFile(__dirname + '/views/index.html')
+router.get('/chat', authenticated, (req, res) => {
   res.render('chat')
 })
 
