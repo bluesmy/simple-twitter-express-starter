@@ -15,8 +15,7 @@ const tweetController = {
         users = users.map(user => ({
           ...user.dataValues,
           FollowerCount: user.Followers.length,
-          isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
-          introduction: user.introduction.substring(0, 50)
+          isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
         users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
         return res.render('tweets', {
@@ -27,19 +26,6 @@ const tweetController = {
     })
   },
 
-  // getTweets: (req, res) => {
-  //   Tweet.findAll({
-  //     nest: true,
-  //     raw: true,
-  //     include: User
-  //   }).then(tweets => {
-  //     return res.render("tweets", {
-  //       tweets: tweets.map(t => ({
-  //         ...t
-  //       }))
-  //     });
-  //   });
-  // },
   postTweets: (req, res) => {
     if (
       req.body.description.length > 140 ||
