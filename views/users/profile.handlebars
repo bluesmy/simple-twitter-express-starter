@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-2 ">
+  <div class="col-md-2">
     <div class="text-center">
       <img class="rounded" src="{{profile.avatar}}" alt="avatar">
       <h2>{{profile.name}}</h2>
@@ -29,7 +29,7 @@
 
   <div class="col-md-10">
     {{#each profile.Tweets}}
-    <div class="card mb-3">
+    <div class="card mb-3 ml-4">
       <div class="row m-1">
         <div class="col-md-4 text-center m-auto">
           <img class="rounded ml-2" style="width: 90px;" src="{{this.User.avatar}}" alt="avatar">
@@ -41,9 +41,7 @@
           <a href="" class="text-danger">like</a>
         </div>
       </div>
-
     </div>
     {{/each}}
   </div>
-
 </div>
