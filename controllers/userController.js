@@ -159,7 +159,7 @@ const userController = {
 
       const Followings = user.Followings.map(following => ({
         ...following.dataValues,
-        introduction: following.introduction.substring(0, 50)
+        // introduction: following.introduction.substring(0, 50)
       })).sort((a, b) => b.Followship.updatedAt - a.Followship.updatedAt)  // 依照Following順序排列
 
       return res.render('users/followings', { profile: user.get(), TweetsCount, FollowingsCount, FollowersCount, LikesCount, isFollowed, Followings })
@@ -184,7 +184,7 @@ const userController = {
 
       const Followers = user.Followers.map(follower => ({
         ...follower.dataValues,
-        introduction: follower.introduction.substring(0, 50),
+        // introduction: follower.introduction.substring(0, 50),
         isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(follower.id)
       })).sort((a, b) => b.Followship.updatedAt - a.Followship.updatedAt)  // 依照Follow順序排列
 
