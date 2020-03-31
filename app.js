@@ -3,6 +3,9 @@ const helpers = require('./_helpers')
 
 const app = express()
 const port = 3000
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
@@ -15,6 +18,7 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main', helpers: require('./con
 app.set('view engine', 'handlebars')
 
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 app.use(session({
   secret: 'your secret key',
@@ -28,6 +32,7 @@ app.use(passport.session())
 app.use(flash())
 
 app.use(methodOverride('_method'))
+app.use('/upload', express.static(__dirname + '/upload'))
 
 app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)

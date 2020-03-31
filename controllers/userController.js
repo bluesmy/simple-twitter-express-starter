@@ -1,4 +1,6 @@
 const bcrypt = require('bcryptjs')
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const db = require('../models')
 const helpers = require('../_helpers')
 const User = db.User
@@ -65,6 +67,56 @@ const userController = {
       const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
       return res.render('users/profile', { profile: user.get(), TweetsCount, FollowingsCount, FollowersCount, LikesCount, isFollowed })
     })
+  },
+
+  editUser: (req, res) => {
+    if (helpers.getUser(req).id !== Number(req.params.id)) {
+      req.flash('error_messages', '非本人無編輯權限！')
+      return res.redirect('back')
+    }
+    User.findByPk(req.params.id).then(user => {
+      return res.render('users/edit', { user })
+    })
+  },
+
+  putUser: (req, res) => {
+    if (helpers.getUser(req).id !== Number(req.params.id)) {
+      req.flash('error_messages', '非本人無編輯權限！')
+      return res.redirect('back')
+    }
+    if (!req.body.name) {
+      req.flash('error_messages', "Name didn't exist")
+      return res.redirect('back')
+    }
+
+    const { file } = req
+    if (file) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(file.path, (err, img) => {
+        return User.findByPk(req.params.id).then(user => {
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            avatar: file ? img.data.link : user.avatar
+          }).then(user => {
+            req.flash('success_messages', 'User was successfully updated')
+            return res.redirect(`/users/${req.params.id}/tweets`)
+          })
+        })
+      })
+    } else {
+      User.findByPk(req.params.id).then(user => {
+        user.update({
+          name: req.body.name,
+          introduction: req.body.introduction,
+          avatar: user.avatar
+        })
+          .then(user => {
+            req.flash('success_messages', 'User was successfully updated')
+            return res.redirect(`/users/${req.params.id}/tweets`)
+          })
+      })
+    }
   },
 
   getLikes: (req, res) => {

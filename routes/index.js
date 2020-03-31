@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const helpers = require('../_helpers')
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
@@ -42,6 +44,8 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/logout', userController.logout)
 
 router.get('/users/:id/tweets', authenticated, userController.getUser)
+router.get('/users/:id/edit', authenticated, userController.editUser)
+router.post('/users/:id/edit', authenticated, upload.single('avatar'), userController.putUser)
 router.get('/users/:id/likes', authenticated, userController.getLikes)
 router.get('/users/:id/followings', authenticated, userController.getFollowings)
 router.get('/users/:id/followers', authenticated, userController.getFollowers)
