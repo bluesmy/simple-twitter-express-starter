@@ -10,7 +10,7 @@ class Records extends EventEmitter {
   }
 
   push(msg) {
-    data.push(msg);
+    data.push(msg)
 
     if (data.length > MAX) {
       data.splice(0, 1)
