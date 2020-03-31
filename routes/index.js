@@ -50,6 +50,7 @@ router.post('/followships', authenticated, followshipController.addFollowing)
 router.delete('/followships/:followingId', authenticated, followshipController.removeFollowing)
 
 router.get('/chat', (req, res) => {
+  // res.sendFile(__dirname + '/views/index.html')
   res.render('chat')
 })
 
