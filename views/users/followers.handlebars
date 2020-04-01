@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-md-2">
+    <div class="text-center">
+      <img class="rounded" src="{{profile.avatar}}" width='200px' height='200px' alt="avatar">
+      <h2>{{profile.name}}</h2>
+      <p>{{profile.introduction}}</p>
+    </div>
+
+    <ul class="list-unstyled pull-left">
+      <li><strong>Tweets: {{ TweetsCount }}</strong> </li>
+      <li><strong>Following: {{ FollowingsCount }}</strong> </li>
+      <li><strong>Follower: {{ FollowersCount }}</strong> </li>
+      <li><strong>Like: {{ LikesCount }}</strong></li>
+    </ul>
+    {{#ifCond profile.id user.id}}
+    <a class="btn btn-primary" href="/users/{{profile.id}}/edit" role="button">Edit Profile</a>
+    {{else}}
+    {{#if this.isFollowed }}
+    <form action="/followships/{{profile.id}}?_method=DELETE" method="POST" style="display: contents;"><button
+        type="submit" class="btn btn-danger">Unfollow</button></form>
+    {{else}}
+    <form action="/followships" method="POST" style="display: contents;">
+      <input type="hidden" name="id" value="{{profile.id}}">
+      <button type="submit" class="btn btn-info">Follow</button></form>
+    {{/if}}
+    {{/ifCond}}
+  </div>
+
+  <div class="col-md-10">
+    <h2 class="ml-4">Follower</h2>
+    <div class="row m-1">
+      {{#each Followers}}
+      <div class="card col-md-5 mb-3 ml-4">
+        <div class="row m-1">
+          <div class="col-md-4 text-center m-auto">
+            <img class="rounded ml-2" style="width: 90px;" src="{{this.avatar}}" alt="avatar">
+          </div>
+          <div class="col-md-8">
+            <h5><a href="/users/{{this.id}}/tweets">{{this.name}}</a></h5>
+            <p>{{this.introduction}}</p>
+            <div style="text-align:right;">
+              {{#ifCond this.id ../user.id}}
+              <a class="btn btn-primary" href="/users/{{this.id}}/edit" role="button">Edit Profile</a>
+              {{else}}
+              {{#if this.isFollowed }}
+              <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button
+                  type="submit" class="btn btn-danger">Unfollow</button></form>
+              {{else}}
+              <form action="/followships" method="POST" style="display: contents;">
+                <input type="hidden" name="id" value="{{this.id}}">
+                <button type="submit" class="btn btn-info">Follow</button></form>
+              {{/if}}
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+</div>

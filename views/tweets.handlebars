@@ -13,8 +13,8 @@
     <div class="card mb-3">
       <div class="row m-1">
         <div class="col-md-4 text-center m-auto">
-          <a href="/users/{{this.User.id}}/tweets"><img class="rounded ml-2" src="{{this.User.avatar}}"
-              alt="avatar"></a>
+          <a href="/users/{{this.User.id}}/tweets"><img class="rounded ml-2" src="{{this.User.avatar}}" width='200px'
+              height='200px' alt="avatar"></a>
         </div>
         <div class="col-md-8">
           <h6><a href="/users/{{this.User.id}}/tweets">{{this.User.name}},{{ moment this.createdAt}}</a></h6>
@@ -49,13 +49,24 @@
     <div class="card mb-3">
       <div class="row m-1">
         <div class="col-md-4">
-          <a href="/users/{{this.id}}/tweets"><img class="rounded ml-2" style="width: 50px;" src="{{this.avatar}}"
-              alt="avatar"></a>
+          <a href="/users/{{this.id}}/tweets"><img class="rounded ml-2" src="{{this.avatar}}" width='100px'
+              height='100px' alt="avatar"></a>
         </div>
         <div class="col-md-8">
           <h5><a href="/users/{{this.id}}/tweets">{{this.name}}</a></h5>
           <p class="mr-3">{{this.introduction}}</p>
-          <button class="btn btn-info">Follow</button>
+          {{#ifCond this.id ../user.id}}
+          <a class="btn btn-primary" href="/users/{{this.id}}/edit" role="button">Edit Profile</a>
+          {{else}}
+          {{#if this.isFollowed }}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button
+              type="submit" class="btn btn-danger">Unfollow</button></form>
+          {{else}}
+          <form action="/followships" method="POST" style="display: contents;">
+            <input type="hidden" name="id" value="{{this.id}}">
+            <button type="submit" class="btn btn-info">Follow</button></form>
+          {{/if}}
+          {{/ifCond}}
         </div>
       </div>
 
