@@ -28,6 +28,7 @@ const replyController = {
   postReply: (req, res) => {
     if (req.body.comment.length === 0) {
       req.flash("error_messages", "please enter replies.");
+      return res.redirect('back')
     }
     return Reply.create({
       comment: req.body.comment,

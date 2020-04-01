@@ -24,7 +24,7 @@
             </button></a>
           {{#if this.isLiked}}
           <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
-            <button class="btn" type="submit"><i class="far fa-thumbs-up" style="color: red;"></i>
+            <button class="btn" type="submit"><i class="fas fa-thumbs-up" style="color: red;"></i>
               <p style="display:inline;color: red;">({{this.LikedUsers.length}})</p>
             </button>
           </form>
