@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-md-2 ">
+    <div class="text-center">
+      <img class="rounded" src="{{profile.avatar}}" alt="avatar">
+      <h2>{{profile.name}}</h2>
+      <p>{{profile.introduction}}</p>
+    </div>
+
+
+    <ul class="list-unstyled pull-left">
+      <li><strong>Tweets:</strong> </li>
+      <li><strong>Following:</strong> </li>
+      <li><strong>Follower:</strong> </li>
+      <li><strong>like</strong></li>
+    </ul>
+    <button class="btn btn-info">Follow</button>
+  </div>
+
+  <div class="col-md-10">
+    {{#each profile.Tweets}}
+    <div class="card mb-3">
+      <div class="row m-1">
+        <div class="col-md-4 text-center m-auto">
+          <img class="rounded ml-2" style="width: 90px;" src="{{this.User.avatar}}" alt="avatar">
+        </div>
+        <div class="col-md-8">
+          <h6><a href="/users/{{this.User.id}}/tweets">{{this.User.name}},{{ moment this.createdAt}}</a></h6>
+          <p>{{this.description}}</p>
+          <a href="/tweets/{{this.id}}/replies"><button class="btn"><i class="far fa-comment-dots"
+                style="color:blue;"></i>
+              <p style="display:inline;color: blue;">({{this.Replies.length}})</p>
+            </button></a>
+          {{#if this.isLiked}}
+          <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
+            <button class="btn" type="submit"><i class="far fa-thumbs-up" style="color: red;"></i>
+              <p style="display:inline;color: red;">({{this.LikedUsers.length}})</p>
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
+            <button class="btn" type="submit"><i class="far fa-thumbs-up" style="color: red;"></i>
+              <p style="display:inline;color: red;">({{this.LikedUsers.length}})</p>
+            </button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+
+    </div>
+    {{/each}}
+  </div>
+
+</div>
