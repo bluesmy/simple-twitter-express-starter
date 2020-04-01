@@ -36,8 +36,23 @@
         <div class="col-md-8">
           <h6><a href="/users/{{this.User.id}}/tweets">{{this.User.name}},{{ moment this.createdAt}}</a></h6>
           <p>{{this.description}}</p>
-          <a href="" class="mr-1">Reply</a>
-          <a href="" class="text-danger">like</a>
+          <a href="/tweets/{{this.id}}/replies"><button class="btn"><i class="far fa-comment-dots"
+                style="color:blue;"></i>
+              <p style="display:inline;color: blue;">({{this.Replies.length}})</p>
+            </button></a>
+          {{#if this.isLiked}}
+          <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
+            <button class="btn" type="submit"><i class="far fa-thumbs-up" style="color: red;"></i>
+              <p style="display:inline;color: red;">({{this.LikedUsers.length}})</p>
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
+            <button class="btn" type="submit"><i class="far fa-thumbs-up" style="color: red;"></i>
+              <p style="display:inline;color: red;">({{this.LikedUsers.length}})</p>
+            </button>
+          </form>
+          {{/if}}
         </div>
       </div>
     </div>

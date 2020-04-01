@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
-const db = require('../models')
 const helpers = require('../_helpers')
+const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
 const Like = db.Like
@@ -189,6 +189,28 @@ const userController = {
       })).sort((a, b) => b.Followship.updatedAt - a.Followship.updatedAt)  // 依照Follow順序排列
 
       return res.render('users/followers', { profile: user.get(), TweetsCount, FollowingsCount, FollowersCount, LikesCount, isFollowed, Followers })
+    })
+  },
+
+  addLike: (req, res) => {
+    return Like.create({
+      UserId: helpers.getUser(req).id,
+      TweetId: req.params.id
+    }).then(tweet => {
+      return res.redirect('back')
+    })
+  },
+  
+  removeLike: (req, res) => {
+    return Like.findOne({
+      where: {
+        UserId: helpers.getUser(req).id,
+        TweetId: req.params.id
+      }
+    }).then(like => {
+      like.destroy().then(tweet => {
+        return res.redirect('back')
+      })
     })
   }
 }
