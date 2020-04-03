@@ -6,6 +6,7 @@ const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
 const Like = db.Like
+const Reply = db.Reply
 
 const userController = {
   signUpPage: (req, res) => {
@@ -50,13 +51,34 @@ const userController = {
     res.redirect('/signin')
   },
 
+  // getUser: (req, res) => {
+  //   User.findByPk(req.params.id, {
+  //     include: [
+  //       { model: Tweet, include: [User, Reply] },
+  //       { model: User, as: 'Followers' },
+  //       { model: User, as: 'Followings' },
+  //       { model: Reply, include: [Tweet] },
+  //       Like
+  //     ],
+  //     order: [[{ model: Tweet }, 'createdAt', 'DESC']]
+  //   }).then(user => {
+  //     const TweetsCount = user.Tweets.length
+  //     const FollowingsCount = user.Followings.length
+  //     const FollowersCount = user.Followers.length
+  //     const LikesCount = user.Likes.length
+  //     const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+  //     return res.render('users/profile', { profile: user.get(), TweetsCount, FollowingsCount, FollowersCount, LikesCount, isFollowed })
+  //   })
+  // },
+
   getUser: (req, res) => {
     User.findByPk(req.params.id, {
       include: [
-        { model: Tweet, include: [User] },
+        { model: Tweet, include: [User, Reply, Like] },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
         Like
+        // { model: Tweet, as: 'LikedTweets' }
       ],
       order: [[{ model: Tweet }, 'createdAt', 'DESC']]
     }).then(user => {
@@ -65,6 +87,15 @@ const userController = {
       const FollowersCount = user.Followers.length
       const LikesCount = user.Likes.length
       const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+      // const tweets = user.Tweets.map(tweet => ({
+      //   ...tweet.dataValues,
+      //   isLiked: helpers.getUser(req).LikedTweets
+      //     ? helpers
+      //       .getUser(req)
+      //       .LikedTweets.map(d => d.id)
+      //       .includes(tweet.id)
+      //     : helpers.getUser(req).LikedTweets
+      // }))
       return res.render('users/profile', { profile: user.get(), TweetsCount, FollowingsCount, FollowersCount, LikesCount, isFollowed })
     })
   },
@@ -122,11 +153,11 @@ const userController = {
   getLikes: (req, res) => {
     User.findByPk(req.params.id, {
       include: [
-        { model: Tweet, include: [User] },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
         Like,
-        { model: Tweet, as: 'LikedTweets', include: [User] },
+        { model: Tweet, as: 'LikedTweets', include: [User, Reply, Like] },
+        { model: Tweet, include: [User] }
       ],
       // 依照Like順序排列
       order: [[{ model: Tweet, as: 'LikedTweets' }, Like, 'updatedAt', 'DESC']]
@@ -136,7 +167,15 @@ const userController = {
       const FollowersCount = user.Followers.length
       const LikesCount = user.Likes.length
       const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
-
+      // const tweets = user.Tweets.map(tweet => ({
+      //   ...tweet.dataValues,
+      //   isLiked: helpers.getUser(req).LikedTweets
+      //     ? helpers
+      //       .getUser(req)
+      //       .LikedTweets.map(d => d.id)
+      //       .includes(tweet.id)
+      //     : helpers.getUser(req).LikedTweets
+      // }))
       return res.render('users/likes', { profile: user.get(), TweetsCount, FollowingsCount, FollowersCount, LikesCount, isFollowed })
     })
   },
@@ -200,7 +239,7 @@ const userController = {
       return res.redirect('back')
     })
   },
-  
+
   removeLike: (req, res) => {
     return Like.findOne({
       where: {
