@@ -29,7 +29,7 @@
   </div>
 
   <div class="col-md-10">
-    {{#each profile.Tweets}}
+    {{#each tweets}}
     <div class="card mb-3 ml-4">
       <div class="row m-1">
         <div class="col-md-4 text-center m-auto">
@@ -45,7 +45,7 @@
           {{#if this.isLiked}}
           <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
             <button class="btn" type="submit"><i class="fas fa-thumbs-up" style="color: red;"></i>
-              <p style="display:inline;color: red;">({{this.likes.length}})</p>
+              <p style="display:inline;color: red;">({{this.Likes.length}})</p>
             </button>
           </form>
           {{else}}

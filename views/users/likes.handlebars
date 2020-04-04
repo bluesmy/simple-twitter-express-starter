@@ -29,7 +29,7 @@
 
   <div class="col-md-10">
     <h2>Like</h2>
-    {{#each profile.LikedTweets}}
+    {{#each LikedTweets}}
     <div class="card mb-3 ml-4">
       <div class="row m-1">
         <div class="col-md-4 text-center m-auto">
@@ -39,7 +39,7 @@
           <h6><a href="/users/{{this.User.id}}/tweets">{{this.User.name}},{{ moment this.createdAt}}</a></h6>
           <p>{{this.description}}</p>
           {{!-- <a href="" class="mr-1">Reply</a> --}}
-          <a href="/tweets/{{tweet.id}}/replies"><button class="btn"><i class="far fa-comment-dots"
+          <a href="/tweets/{{this.id}}/replies"><button class="btn"><i class="far fa-comment-dots"
                 style="color:blue;"></i>
               <p style="display:inline;color: blue;">({{this.Replies.length}})</p>
             </button></a>
