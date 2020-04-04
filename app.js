@@ -3,6 +3,9 @@ const helpers = require('./_helpers')
 
 const app = express()
 const port = 3000
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
@@ -21,6 +24,7 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 const sessionMiddleware = session({
   secret: 'secret',
@@ -40,6 +44,7 @@ app.use(passport.session())
 app.use(flash())
 
 app.use(methodOverride('_method'))
+app.use('/upload', express.static(__dirname + '/upload'))
 
 app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)

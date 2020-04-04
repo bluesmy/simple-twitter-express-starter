@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="col-md-8">
+    <form action="/tweets" method="POST">
+      <div class="form-group">
+        <textarea class="form-control mb-3" name="description" id="description" cols="20" rows="5"
+          maxlength="140"></textarea>
+        <button type="submit" class="btn btn-info float-right">tweet</button>
+      </div>
+    </form>
+    <br />
+    <br />
+    {{#each tweets}}
+    <div class="card mb-3">
+      <div class="row m-1">
+        <div class="col-md-4 text-center m-auto">
+          <a href="/users/{{this.User.id}}/tweets"><img class="rounded ml-2" src="{{this.User.avatar}}" alt="avatar"
+              style="width: 100px;height:100px;"></a>
+
+        </div>
+        <div class="col-md-8">
+          <h6><a href="/users/{{this.User.id}}/tweets">{{this.User.name}},{{ moment this.createdAt}}</a></h6>
+          <p>{{this.description}}</p>
+          <a href="/tweets/{{this.id}}/replies"><button class="btn"><i class="far fa-comment-dots"
+                style="color:blue;"></i>
+              <p style="display:inline;color: blue;">({{this.reply}})</p>
+            </button></a>
+          {{#if this.isLiked}}
+          <form action="/tweets/{{this.id}}/unlike" method="POST" style="display: contents;">
+            <button class="btn" type="submit"><i class="fas fa-thumbs-up" style="color: red;"></i>
+              <p style="display:inline;color: red;">({{this.LikedUsers.length}})</p>
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{this.id}}/like" method="POST" style="display: contents;">
+            <button class="btn" type="submit"><i class="far fa-thumbs-up" style="color: red;"></i>
+              <p style="display:inline;color: red;">({{this.LikedUsers.length}})</p>
+            </button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+
+    </div>
+    {{/each}}
+
+  </div>
+
+  <div class="col-md-4">
+    <h2>Popular</h2>
+    {{#each users}}
+    <div class="card mb-3">
+      <div class="row m-1">
+        <div class="col-md-4">
+          <a href="/users/{{this.id}}/tweets"><img class="rounded ml-2" src="{{this.avatar}}"
+              style="width: 50px;height:50px;" alt="avatar"></a>
+        </div>
+        <div class="col-md-8">
+          <h5><a href="/users/{{this.id}}/tweets">{{this.name}}</a></h5>
+          <p class="mr-3">{{this.introduction}}</p>
+          {{#ifCond this.id ../user.id}}
+          <a class="btn btn-primary" href="/users/{{this.id}}/edit" role="button">Edit Profile</a>
+          {{else}}
+          {{#if this.isFollowed }}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button
+              type="submit" class="btn btn-danger">Unfollow</button></form>
+          {{else}}
+          <form action="/followships" method="POST" style="display: contents;">
+            <input type="hidden" name="id" value="{{this.id}}">
+            <button type="submit" class="btn btn-info">Follow</button></form>
+          {{/if}}
+          {{/ifCond}}
+        </div>
+      </div>
+
+    </div>
+    {{/each}}
+
+  </div>
+</div>
