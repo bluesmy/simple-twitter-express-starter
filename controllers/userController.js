@@ -60,7 +60,6 @@ const userController = {
         Like
         // { model: Tweet, as: 'LikedTweets' }
       ],
-      order: [[{ model: Tweet }, 'createdAt', 'DESC']]
     }).then(user => {
       const TweetsCount = user.Tweets.length
       const FollowingsCount = user.Followings.length
@@ -77,7 +76,8 @@ const userController = {
           Like,
           Reply,
           { model: User, as: 'LikedUsers' }
-        ]
+        ],
+        order: [['createdAt', 'DESC']]
       })
         .then(tweets => {
           tweets = tweets.map(tweet => ({
