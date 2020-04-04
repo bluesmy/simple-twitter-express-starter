@@ -15,6 +15,11 @@
     "logging": false
   },
   "production": {
-    "use_env_variable": "CLEARDB_DATABASE_URL"
+    "use_env_variable": "CLEARDB_DATABASE_URL",
+    "username": "bc07201efc9b46",
+    "password": "fafe9d4e",
+    "database": "heroku_db7a4c4fe38de4f",
+    "host": "us-cdbr-iron-east-01.cleardb.net",
+    "dialect": "mysql"
   }
 }
