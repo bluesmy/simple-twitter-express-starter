@@ -13,11 +13,13 @@
     <div class="card mb-3">
       <div class="row m-1">
         <div class="col-md-4 text-center m-auto">
-          <a href="/users/{{this.User.id}}/tweets"><img class="rounded ml-2" src="{{this.User.avatar}}" width='200px'
-              height='200px' alt="avatar"></a>
+          <a href="/users/{{this.User.id}}/tweets"><img class="rounded ml-2" src="{{this.User.avatar}}" alt="avatar"
+              style="width: 100px;height:100px;"></a>
+
         </div>
         <div class="col-md-8">
           <h6><a href="/users/{{this.User.id}}/tweets">{{this.User.name}},{{ moment this.createdAt}}</a></h6>
+          <p>{{this.description}}</p>
           <a href="/tweets/{{this.id}}/replies"><button class="btn"><i class="far fa-comment-dots"
                 style="color:blue;"></i>
               <p style="display:inline;color: blue;">({{this.reply}})</p>
@@ -49,8 +51,8 @@
     <div class="card mb-3">
       <div class="row m-1">
         <div class="col-md-4">
-          <a href="/users/{{this.id}}/tweets"><img class="rounded ml-2" src="{{this.avatar}}" width='100px'
-              height='100px' alt="avatar"></a>
+          <a href="/users/{{this.id}}/tweets"><img class="rounded ml-2" src="{{this.avatar}}"
+              style="width: 50px;height:50px;" alt="avatar"></a>
         </div>
         <div class="col-md-8">
           <h5><a href="/users/{{this.id}}/tweets">{{this.name}}</a></h5>
