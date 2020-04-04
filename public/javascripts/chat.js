@@ -90,16 +90,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   })
 
+  var scrolled = false
+
+  setInterval(updateScroll, 5000)
+
+  content.on('scroll', function () {
+    scrolled = true
+  })
+
   // 新增訊息到方框中
   function addMsgToBox(d) {
     var msgBox = document.createElement("div")
     msgBox.className = "msg"
     var nameBox = document.createElement("span")
     nameBox.className = "name"
+    var avatarBox = document.createElement("img")
     var name = document.createTextNode(d.name)
+    avatarBox.src = d.avatar
     var msg = document.createTextNode(d.msg)
 
     nameBox.appendChild(name)
+    msgBox.appendChild(avatarBox)
     msgBox.appendChild(nameBox)
     msgBox.appendChild(msg)
     content.appendChild(msgBox)
@@ -114,4 +125,13 @@ document.addEventListener("DOMContentLoaded", () => {
     var childs = content.children
     childs[0].remove()
   }
+
+  // 讓捲軸維持在最下方，顯示最新訊息
+  function updateScroll() {
+    if (!scrolled) {
+      var element = document.getElementById("content")
+      element.scrollTop = element.scrollHeight
+    }
+  }
+
 })

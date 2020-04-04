@@ -58,14 +58,11 @@ input[type="button"] {
 .msg > span {
   width: 25%;
   display: inline-block;
+  color: blue;
 }
 
-.msg > span::before {
-  color: darkred;
-  content: " { ";
-} 
-
-.msg > span::after {
-  color: darkred;
-  content: " } ";
-}     
+img {
+  border-radius: 50%;
+  width: 40px;
+  margin-right: 15px;
+}

@@ -24,12 +24,13 @@
     <div id="send-box">
       <form id="send-form">
         <input type="hidden" name="name" id="name" placeholder="暱稱" value={{user.name}}>
-        <textarea type="text" name="msg" id="msg" cols="60" rows="5" onkeypress="isTyping('true'); timer=5;"
+        <input type="hidden" name="avatar" id="avatar" value={{user.avatar}}>
+        <textarea type="text" name="msg" id="msg" cols="60" rows="4" onkeypress="isTyping('true'); timer=5;"
           onkeyup="isTyping('false')"></textarea>
         <input type="submit" value="送出" class="btn btn-primary btn-block">
       </form>
+      <div id="typing_on"></div>
     </div>
-    <div id="typing_on"></div>
 
   </div>
   <script src="/javascripts/chat.js"></script>
