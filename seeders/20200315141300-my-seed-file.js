@@ -69,7 +69,7 @@ module.exports = {
       ],
       {}
     )
-    queryInterface.bulkInsert(
+    return queryInterface.bulkInsert(
       'Tweets',
       Array.from({ length: 10 }).map(d => ({
         UserId: Math.floor(Math.random() * 6 + 1),
@@ -79,21 +79,10 @@ module.exports = {
       })),
       {}
     )
-    return queryInterface.bulkInsert(
-      'Followships',
-      Array.from({ length: 10 }).map(d => ({
-        followerId: Math.floor(Math.random() * 6 + 1),
-        followingId: Math.floor(Math.random() * 6 + 1),
-        createdAt: new Date(),
-        updatedAt: new Date()
-      })),
-      {}
-    )
   },
 
   down: (queryInterface, Sequelize) => {
     queryInterface.bulkDelete('Users', null, {})
-    queryInterface.bulkDelete('Tweets', null, {})
-    return queryInterface.bulkDelete('Followships', null, {})
+    return queryInterface.bulkDelete('Tweets', null, {})
   }
 }
