@@ -1,6 +1,6 @@
 # Simple Twitter
 
-A simple web app built with Node.js, Express, and MySQL. Users can manage their own expense records and filter records by months or categories.
+A simple web app with simple features similar to Twitter. Built with Node.js, Express, and MySQL.
 
 ## Prerequisites
 
