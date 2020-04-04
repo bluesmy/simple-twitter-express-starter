@@ -2,7 +2,7 @@ const express = require('express')
 const helpers = require('./_helpers')
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -41,9 +41,6 @@ app.use((req, res, next) => {
   res.locals.error_messages = req.flash('error_messages')
   next()
 })
-
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 app.use('/', require('./routes/index'))
 
