@@ -85,8 +85,11 @@ $ npx sequelize db:migrate
 $ npx sequelize db:seed:all
 ```
 
-**8. Change link in views/layouts/main.handlebars line 28**
-Change 
+**8. Change chatroom link in views/layouts/main.handlebars**
+
+> /views/layouts/main.handlebars line 28
+
+Change
 ```
 onclick="window.open('https://simple-twitter-express-demo.herokuapp.com/chat', 'Chatroom', config='height=900, width=600')"
 ```
