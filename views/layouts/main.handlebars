@@ -25,11 +25,11 @@
         {{/ifCond}}
         {{#if user}}
         <a class="btn btn-outline-primary ml-2"
-          onclick="window.open('http://localhost:3000/chat', 'Chatroom', config='height=900, width=600')">
+          onclick="window.open('https://simple-twitter-express-demo.herokuapp.com/chat', 'Chatroom', config='height=900, width=600')">
           <i class="fa fa-comments-o px-2" aria-hidden="true"></i>
         </a>
         <a href="/users/{{user.id}}/tweets" style="color: black;margin-right: 10px;"><img class="rounded"
-            style="width:40px;" src="{{user.avatar}}" alt="user"></a>
+            style="width:40px;height:40px;" src="{{user.avatar}}" alt="user"></a>
         <a href="/logout"><button class="btn btn-outline-primary my-2 my-sm-0">LogOut</button></a>
         {{/if}}
       </div>
