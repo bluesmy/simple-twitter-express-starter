@@ -12,7 +12,8 @@
       <th scope="col">#</th>
       <th scope="col">User</th>
       <th scope="col">Tweet</th>
-      <th scope="col">#</th>
+      <th scope="col">Replies</th>
+      <th scope="col">Delete</th>
     </tr>
   </thead>
   <tbody>
@@ -27,11 +28,6 @@
         {{/each}}
       </td>
       <td>
-        <button type="button" class="btn btn-link">
-          <a href="/tweets/{{this.id}}">
-            Show
-          </a>
-        </button>
         <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
           <button type="submit" class="btn btn-link">Delete</button>
         </form>
