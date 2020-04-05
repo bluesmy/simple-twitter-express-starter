@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/be568d80b0.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -23,8 +24,12 @@
         <a href="/admin" style="color: black;margin-right: 10px;">Admin 後台</a>
         {{/ifCond}}
         {{#if user}}
+        <a class="btn btn-outline-primary ml-2"
+          onclick="window.open('http://localhost:3000/chat', 'Chatroom', config='height=900, width=600')">
+          <i class="fa fa-comments-o px-2" aria-hidden="true"></i>
+        </a>
         <a href="/users/{{user.id}}/tweets" style="color: black;margin-right: 10px;"><img class="rounded"
-            style="width:40px;height:40px;" src="{{user.avatar}}" alt="user"></a>
+            style="width:40px;" src="{{user.avatar}}" alt="user"></a>
         <a href="/logout"><button class="btn btn-outline-primary my-2 my-sm-0">LogOut</button></a>
         {{/if}}
       </div>
