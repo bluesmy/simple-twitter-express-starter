@@ -34,6 +34,17 @@
 
   </div>
   <script src="/javascripts/chat.js"></script>
+  <script>
+    // press enter to submit, press enter + shift to go to a new line
+    function submitOnEnter(event) {
+      if (event.which === 13 & !event.shiftKey) {
+        event.target.form.dispatchEvent(new Event("submit", { cancelable: true }))
+        event.preventDefault();
+      }
+    }
+
+    document.getElementById("msg").addEventListener("keypress", submitOnEnter)
+  </script>
 </body>
 
 </html>
