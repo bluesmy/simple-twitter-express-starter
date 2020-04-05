@@ -33,6 +33,8 @@ const authenticatedAdmin = (req, res, next) => {
 router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweets)
+router.get('/tweets/:id/share', authenticated, tweetController.shareTweet)
+router.post('/tweets/:id/share', authenticated, tweetController.postTweetShare)
 
 router.post('/tweets/:id/like', authenticated, userController.addLike)
 router.post('/tweets/:id/unlike', authenticated, userController.removeLike)

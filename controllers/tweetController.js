@@ -57,6 +57,29 @@ const tweetController = {
         res.redirect("/tweets");
       });
     }
+  },
+
+  shareTweet: (req, res) => {
+    return Tweet.findByPk(req.params.id, { include: User }).then(tweet => {
+      return res.render('sharetweet', { tweet: tweet.get() })
+    })
+  },
+  postTweetShare: (req, res) => {
+    if (
+      req.body.description.length > 140 ||
+      req.body.description.length === 0
+    ) {
+      req.flash('error_messages', 'please enter 1 to 140 words.')
+      return res.redirect('back')
+    } else {
+      return Tweet.create({
+        description: req.body.description,
+        UserId: helpers.getUser(req).id
+      }).then(tweet => {
+        req.flash('success_messages', 'tweet was successfully created')
+        res.redirect('/tweets')
+      })
+    }
   }
 };
 

@@ -1,0 +1,9 @@
+<h1>Share Post</h1>
+<form action="/tweets/{{tweet.id}}/share" method="POST">
+  <div class="form-group">
+    {{!-- <label for="description">Edit sharing post</label> --}}
+    <textarea class="form-control mb-3" name="description" id="description" cols="20"
+      rows="5">{{tweet.User.name}}{{moment tweet.createdAt}}{{tweet.description}}</textarea>
+    <button type=" submit" class="btn btn-secondary float-right">Share</button>
+  </div>
+</form>
