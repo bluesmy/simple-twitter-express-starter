@@ -85,13 +85,23 @@ $ npx sequelize db:migrate
 $ npx sequelize db:seed:all
 ```
 
-**8. Activate the server**
+**8. Change link in views/layouts/main.handlebars line 28**
+Change 
+```
+onclick="window.open('https://simple-twitter-express-demo.herokuapp.com/chat', 'Chatroom', config='height=900, width=600')"
+```
+to
+```
+onclick="window.open('http://localhost:3000/chat', 'Chatroom', config='height=900, width=600')"
+```
+
+**9. Activate the server**
 
 ```
 $ npm run dev
 ```
 
-**9. Activation success if you find the message**
+**10. Activation success if you find the message**
 
 ```
 > Example app listening on port 3000!
