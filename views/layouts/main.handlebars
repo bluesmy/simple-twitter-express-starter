@@ -26,6 +26,7 @@
         {{#if user}}
         <a class="btn btn-outline-primary ml-2"
           onclick="window.open('https://simple-twitter-express-demo.herokuapp.com/chat', 'Chatroom', config='height=900, width=600')">
+          {{!-- onclick="window.open('http://localhost:3000/chat', 'Chatroom', config='height=900, width=600')" --}}
           <i class="fa fa-comments-o px-2" aria-hidden="true"></i>
         </a>
         <a href="/users/{{user.id}}/tweets" style="color: black;margin-right: 10px;"><img class="rounded"
