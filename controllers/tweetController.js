@@ -49,8 +49,9 @@ const tweetController = {
       req.flash("error_messages", "please enter 1 to 140 words.");
       return res.redirect("/tweets");
     } else {
+      const sharePost = req.body.description + req.body.description1
       return Tweet.create({
-        description: req.body.description,
+        description: sharePost,
         UserId: helpers.getUser(req).id
       }).then(tweet => {
         req.flash("success_messages", "tweet was successfully created");
@@ -73,7 +74,7 @@ const tweetController = {
       return res.redirect('back')
     } else {
       return Tweet.create({
-        description: req.body.description,
+        description: req.body.description + req.body.description1,
         UserId: helpers.getUser(req).id
       }).then(tweet => {
         req.flash('success_messages', 'tweet was successfully created')
